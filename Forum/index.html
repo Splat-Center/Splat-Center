@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splat-Forum</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body style="background-color: var(--yellow-back);">
+    <div style="margin: 0px; width: 100%; height: 150px; top: 0px; left: 0px; border-radius: 50px; border-top-right-radius: 0px; border-top-left-radius: 0px;">
+        <button onclick="window.location.href = '../index.html'" style="background-color: var(--green);" class="upbar-button">Accueil</button>
+        <button onclick="window.location.href = '../Forum/index.html'" style="background-color: var(--yellow);" class="upbar-button">Forum</button>
+        <button onclick="window.location.href = '../News/index.html'" style="background-color: var(--orange);" class="upbar-button">Articles</button>
+        <button onclick="window.location.href = '../Art/index.html'" style="background-color: var(--red);" class="upbar-button">Atworks</button>
+        <button onclick="window.location.href = '../Music/index.html'" style="background-color: var(--pink);" class="upbar-button">Musiques</button>
+        <button onclick="window.location.href = '../Teams/index.html'" style="background-color: var(--purple);" class="upbar-button">Teams</button>
+        <button onclick="window.location.href = '../Clips/index.html'" style="background-color: var(--blue);" class="upbar-button">Clips</button>
+        <button onclick="window.location.href = '../Account/index.html'" style="background-color: var(--cyan);" class="upbar-button">Compte</button>
+    </div>
+    <h2 style="font-size: 75px; height: 75px; color: var(--yellow); text-align: center;">Forum</h2>
+    <div style="margin: 25px; border: #00000000; border-radius: 25px; background-color: var(--back); width: calc(100% - 50px); height: 250px; padding-bottom: 75px;">
+        <textarea placeholder="Écrire dans le forum..." id="message-content" style="scrollbar-color: #00000000 #00000000; font-size: clamp(10px, 3vw, 25px); margin: 25px; width: calc(100% - 50px); background-color: #00000000; border: #00000000; height: calc(100% - 50px); resize: none; outline: none; font-family: splat regular; color: var(--white);" id="multiliner" name="multiliner"></textarea>
+
+        <img id="pdp-preview" style="border-radius: 100px; border: #00000000; background-color: var(--back); display: block; position: absolute; top: 500px; left: 150px; height: 75px; width: 75px; position: absolute;">
+        <input type="file" name="file" id="pdp-file" class="inputfile" style="background-color: var(--yellow); position: relative; top: 125px; width: 0.1px; height: 0.1px; opacity: 0; overflow: hidden; position: absolute; z-index: -1;">
+        <label for="pdp-file" style="background-color: var(--yellow); display: block; position: absolute; top: 500px; left: 50px; height: 75px; width: 75px;">Choose a file</label>
+        <script>
+            document.getElementById("pdp-file").onchange = function()
+            {
+                var reader = new FileReader();
+                reader.onload = function (e)
+                {
+                    console.log(e.target.result)
+                    document.getElementById("pdp-preview").src = e.target.result;
+                };
+                reader.readAsDataURL(document.getElementById("pdp-file").files[document.getElementById("pdp-file").files.length - 1]);
+            }
+        </script>
+
+        <button onclick='newMessage("453487", "Coconuts XXS", "../Art/art-debug.png", new Date(), document.getElementById("message-content").value, document.getElementById("pdp-preview").src, 8, 1); document.getElementById("message-content").value = ""; document.getElementById("pdp-preview").src = "";' style="background-color: var(--yellow); position: relative; top: -50px; left: calc(100% - 200px); width: 150px; font-size:25px; margin-left: 10px; margin-right: 10px; text-shadow: none; color: #1c1c1c;">Envoyer</button>
+    </div>
+    <div id="message-container" class="transparent" style="width: 100%;">
+        <script>
+            function newMessage(id, author, avatar, date = new Date(), text, file, like, dislike)
+            {
+                var messageModel = document.createElement("div");
+                messageModel.style.backgroundColor = "#41442a";
+                messageModel.style.width = "calc(100% - 50px)";
+                messageModel.style.lineHeight = "0px";
+                messageModel.id = id;
+                messageModel.innerHTML =
+                `
+                <div class="transparent" style="display: flex;">
+                    <div style="background-image: url(${avatar}); border-radius: 1000px; border-radius: 100px; width: 100px; height: 85px; background-position: 50% 50%; background-size: cover; background-clip: border-box;"></div>
+                    <div style="background-color: #00000000; box-shadow: none; width: 90%; margin: 0px;">
+                        <h3 style="margin: 0px; margin-top: 40px; font-size: 30px; line-height: 0px; height: auto;">${author}<i style="filter: opacity(0.5)"> ${date.toLocaleDateString("fr")}</i></h3>
+                        <h4 style="margin: 0px; margin-top: 30px; font-size: 25px; line-height: 35px; padding-bottom: 25px; height: auto;">${text}</h4>
+                    </div>
+                    <div style="background-color: #00000000; box-shadow: none; margin: 0px; width: 100px; margin-right: 50px;">
+                        <button style="margin-bottom: 0px; height: 100px; width: 100px; background-color: var(--green);">${like}</button>
+                        <button style="height: 100px; width: 100px; background-color: var(--red);">${dislike}</button>
+                    </div>
+                </div>
+                <img src="${file}" style="margin: 25px; border-radius: 25px; width: calc(70% - 50px);">
+                `
+
+                if(file === ""){messageModel.lastElementChild.remove();}
+
+                document.getElementById("message-container").insertBefore(messageModel, document.getElementById("message-container").firstChild);
+            }
+        </script>
+
+
+        <!-- <div style="background-color: #41442a; width:calc(100% - 50px); line-height: 0px;">
+            <div class="transparent" style="display: flex;">
+                <div style="border-radius: 1000px; width: 100px; border-radius: 100px; height: 85px; background-size: contain; background-clip: border-box;background-position: 50% 50%;"></div>
+                <div style="background-color: #00000000; box-shadow: none; width: 90%; margin: 0px;">
+                    <h3 style="margin: 0px; margin-top: 40px; font-size: 30px; line-height: 0px; height: auto;">Coconuts XXS<i style="filter: opacity(0.5)"> 15/04/23</i></h3>
+                    <h4 style="margin: 0px; margin-top: 30px; font-size: 25px; line-height: 35px; padding-bottom: 25px; height: auto;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde amet sit ad mollitia pariatur magnam facilis nemo veniam atque nostrum excepturi, fugit vitae tempora cumque! Necessitatibus possimus qui amet aspernatur?</h4>
+                </div>
+                <div style="background-color: #00000000; box-shadow: none; margin: 0px; width: 100px; margin-right: 50px;">
+                    <button style="margin-bottom: 0px; height: 100px; width: 100px; background-color: var(--green);">8</button>
+                    <button style="height: 100px; width: 100px; background-color: var(--red);">3</button>
+                </div>
+            </div>
+            <img src="../Art/art-debug.png" style="margin: 25px; border-radius: 25px; width: calc(70% - 50px);">
+        </div> -->
+    </div>
+</body>
+</html>

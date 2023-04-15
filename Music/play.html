@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splat-Music</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div style="margin: 0px; width: 100%; height: 150px; top: 0px; left: 0px; border-radius: 50px; border-top-right-radius: 0px; border-top-left-radius: 0px;">
+        <button onclick="window.location.href = '../index.html'" style="background-color: var(--green);" class="upbar-button">Accueil</button>
+        <button onclick="window.location.href = '../Forum/index.html'" style="background-color: var(--yellow);" class="upbar-button">Forum</button>
+        <button onclick="window.location.href = '../News/index.html'" style="background-color: var(--orange);" class="upbar-button">Articles</button>
+        <button onclick="window.location.href = '../Art/index.html'" style="background-color: var(--red);" class="upbar-button">Atworks</button>
+        <button onclick="window.location.href = '../Music/index.html'" style="background-color: var(--pink);" class="upbar-button">Musiques</button>
+        <button onclick="window.location.href = '../Teams/index.html'" style="background-color: var(--purple);" class="upbar-button">Teams</button>
+        <button onclick="window.location.href = '../Clips/index.html'" style="background-color: var(--blue);" class="upbar-button">Clips</button>
+        <button onclick="window.location.href = '../Account/index.html'" style="background-color: var(--cyan);" class="upbar-button">Compte</button>
+    </div>
+
+    <div style="background-color: #00000000; margin: 0px; box-shadow: none; width: 100%; display: flex;">
+        <div style="background-image: url(./Alt-Fest.png); width: 100vw; height: 50vw; border-radius: 60px; background-position: 50% 50%;">
+
+        </div>
+        <div style="background-color: #00000000; margin: 0px; box-shadow: none; width: 100vw;">
+            <h2 style="height: auto;">Title</h2>
+            <h4 style="height: auto; line-height: clamp(5px, 10vw, 40px);">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum temporibus dicta velit quis eaque nisi, consequatur cupiditate sed iusto ipsum iste molestiae quas ut nihil laborum minus recusandae, dolorum maiores!</h4>
+            <h3 style="color: var(--pink); height: auto; line-height: 0px; margin-bottom: 0px; margin-top: 50px;">Morceau</h3>
+            <input id="play-slider" class="play" oninput="update()" onmousedown="play()" style="width: 95%; margin-top: 50px;" type="range" min="0" max="180" value="0" step="1">
+            <div style="background-color: #00000000; margin: 0px; box-shadow: none; width: 46vw; margin-top: -20px;">
+                <h4 style="height: auto; width: auto;" id="current-time">00:00</h4>   <h4 style="top:-25px; height: auto; left: calc(100% - 75px); position: relative; margin: 0px; width: fit-content;" id="max-time">00:00</h4>
+            </div>
+            <h3 style="color: var(--purple); height: auto; line-height: 0px; margin-bottom: 0px; margin-top: 5px;">Instrumental</h3>
+            <input id="play-slider-instru" class="play" oninput="updateInstru()" onmousedown="playInstru()" style="width: 95%; margin-top: 50px;" type="range" min="0" max="180" value="0" step="1">
+            <div style="background-color: #00000000; margin: 0px; box-shadow: none; width: 46vw; margin-top: -20px;">
+                <h4 style="height: auto; width: auto;" id="current-time-instru">00:00</h4>   <h4 style="top:-25px; height: auto; left: calc(100% - 75px); position: relative; margin: 0px; width: fit-content;" id="max-time-instru">00:00</h4>
+            </div>
+            <audio id="music">
+                <source src="./Alt-Fest.mp3" type="audio/mpeg">
+            </audio>
+            <audio id="instru">
+                <source src="./Alt-Fest-Instru.mp3" type="audio/mpeg">
+            </audio>
+            <h4 style="height: auto; width: auto; color: var(--pink); margin-top: 10px;" id="current-time">Artistes : Tridenfer</h4>
+            <h4 style="height: auto; width: auto; color: var(--pink); margin-top: 0px;" id="current-time">Date : 06/04/23</h4>
+            <h4 style="height: auto; width: auto; color: var(--pink); margin-top: 0px;" id="current-time">Créateur : Foxxzer</h4>
+        </div>
+
+        <script>
+            Number.prototype.pad = function(size)
+            {
+                var s = String(this);
+                while (s.length < (size || 2)) {s = "0" + s;}
+                return s;
+            }
+
+            var audio = document.getElementById("music");
+            var audioInstru = document.getElementById("instru");
+            var playing = false;
+            var playingInstru = false;
+
+            function play()
+            {
+                if(playingInstru){playInstru();}
+                document.getElementById("play-slider").className = playing?"play":"pause";
+                if(playing){ audio.pause(); }else{ audio.play(); }
+                playing = !playing;
+            }
+            setInterval(() => {if(playing){document.getElementById("play-slider").value = audio.currentTime} document.getElementById("current-time").textContent = `${Math.floor(audio.currentTime/60).pad(2)}:${Math.floor(audio.currentTime - (Math.floor(audio.currentTime/60) * 60)).pad(2)}`}, 1000);
+            function update()
+            {
+                console.log("update")
+                audio.currentTime = document.getElementById("play-slider").value;
+                document.getElementById("current-time").textContent = `${Math.floor(audio.currentTime/60).pad(2)}:${Math.floor(audio.currentTime - (Math.floor(audio.currentTime/60) * 60)).pad(2)}`
+            };
+
+            audio.oncanplay = function()
+            {
+                document.getElementById("play-slider").max = Math.floor(audio.duration) - 1;
+                document.getElementById("max-time").textContent = `${Math.floor(audio.duration/60).pad(2)}:${Math.floor(audio.duration - (Math.floor(audio.duration/60) * 60)).pad(2)}`
+            };
+
+
+            function playInstru()
+            {
+                if(playing){play();}
+                document.getElementById("play-slider-instru").className = playingInstru?"play":"pause";
+                if(playingInstru){ audioInstru.pause(); }else{ audioInstru.play(); }
+                playingInstru = !playingInstru;
+            }
+            setInterval(() => {if(playingInstru){document.getElementById("play-slider-instru").value = audioInstru.currentTime} document.getElementById("current-time-instru").textContent = `${Math.floor(audioInstru.currentTime/60).pad(2)}:${Math.floor(audioInstru.currentTime - (Math.floor(audioInstru.currentTime/60) * 60)).pad(2)}`}, 1000);
+            function updateInstru()
+            {
+                console.log("update")
+                audioInstru.currentTime = document.getElementById("play-slider-instru").value;
+                document.getElementById("current-time-instru").textContent = `${Math.floor(audioInstru.currentTime/60).pad(2)}:${Math.floor(audioInstru.currentTime - (Math.floor(audioInstru.currentTime/60) * 60)).pad(2)}`
+            };
+
+            audioInstru.oncanplay = function()
+            {
+                document.getElementById("play-slider-instru").max = Math.floor(audioInstru.duration) - 1;
+                document.getElementById("max-time-instru").textContent = `${Math.floor(audioInstru.duration/60).pad(2)}:${Math.floor(audioInstru.duration - (Math.floor(audioInstru.duration/60) * 60)).pad(2)}`
+            };
+        </script>
+    </div>
+
+    <div style="border-radius: 100px; border-bottom-left-radius: 0; border-bottom-right-radius: 0; width: 100%; height: auto; margin: 0px;">
+        <div style="background-color: #00000000; box-shadow: none; display: flex; margin: 0px; width: 100%;">
+            <div style="background-color: #00000000; box-shadow: none; margin: 0px; width: 100%;">
+                <h4 style="color: var(--pink); margin: 70px; margin-bottom: 0px; width: calc(100% - 140px); height: 50px; line-height: 140px; margin-top: 0px;">Auteur : Coconuts XXS</h4>
+                <h4 style="color: var(--pink); margin: 70px; margin-top: 0px; width: calc(100% - 140px); height: 50px; line-height: 140px;">Date : 12/04/23</h4>    
+            </div>
+            <button style="right: 0px; position: relative; height: 125px; width: 100%; background-color: var(--pink); margin-top: 50px; margin-right: 50px; margin-bottom: 0px; border-radius: 150px; border-bottom-right-radius: 0px; font-size: 50px;">Envoyer un commentaire</button>
+        </div>
+
+        <div style="background-color: #00000000; box-shadow: none; display: flex; margin: 0px; width: 100%;">
+
+            <div style="display: flex; background-color: #50333f; width:100%">
+                <div style="border-radius: 1000px; width: 80px; height: 80px;"></div>
+                <div style="background-color: #00000000; box-shadow: none; width: 90%; margin: 0px;">
+                    <h3 style="margin: 0px; margin-top: 40px; font-size: 30px; line-height: 0px; height: auto;">Coconuts XXS</h3>
+                    <h4 style="margin: 0px; margin-top: 30px; font-size: 25px; line-height: 35px; padding-bottom: 25px; height: auto;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde amet sit ad mollitia pariatur magnam facilis nemo veniam atque nostrum excepturi, fugit vitae tempora cumque! Necessitatibus possimus qui amet aspernatur?</h4>
+                </div>
+                <div style="background-color: #00000000; box-shadow: none; margin: 0px; width: 100px; margin-right: 50px;">
+                    <button style="margin-bottom: 0px; height: 100px; width: 100px; background-color: var(--green);">8</button>
+                    <button style="height: 100px; width: 100px; background-color: var(--red);">3</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splat-Compte</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body style="background-color: var(--cyan-back);">
+    <div style="margin: 0px; width: 100%; height: 150px; top: 0px; left: 0px; border-radius: 50px; border-top-right-radius: 0px; border-top-left-radius: 0px;">
+        <button onclick="window.location.href = '../index.html'" style="background-color: var(--green);" class="upbar-button">Accueil</button>
+        <button onclick="window.location.href = '../Forum/index.html'" style="background-color: var(--yellow);" class="upbar-button">Forum</button>
+        <button onclick="window.location.href = '../News/index.html'" style="background-color: var(--orange);" class="upbar-button">Articles</button>
+        <button onclick="window.location.href = '../Art/index.html'" style="background-color: var(--red);" class="upbar-button">Atworks</button>
+        <button onclick="window.location.href = '../Music/index.html'" style="background-color: var(--pink);" class="upbar-button">Musiques</button>
+        <button onclick="window.location.href = '../Teams/index.html'" style="background-color: var(--purple);" class="upbar-button">Teams</button>
+        <button onclick="window.location.href = '../Clips/index.html'" style="background-color: var(--blue);" class="upbar-button">Clips</button>
+        <button onclick="window.location.href = '../Account/index.html'" style="background-color: var(--cyan);" class="upbar-button">Compte</button>
+    </div>
+    
+    <body id="unconnected">
+        <div class="transparent" style="display: flex; width: 100%;">
+            <div style="scale: 0.85; margin-top: -75px; margin-left: -25px;">
+                <h3 style="text-align: center; color: var(--cyan); height: auto;">Créer un Compte</h3>
+                <h3 style="text-align: left; color: var(--cyan); height: auto; filter: opacity(0.7);">Pseudo</h3>
+                <div style="background-color: var(--cyan-back);">
+                    <input style="text-align: left; margin-left: 25px; font-size: 40px; height: 90%; width: 90%; background-color: #00000000; border-color: #00000000; font-weight: 500; font-family: splat regular; color: var(--white); text-shadow: #000000 0px 0px 15px; font-size: clamp(7px, 10vw, 55px); line-height: 0;">
+                </div>
+                <h3 style="text-align: left; color: var(--cyan); height: auto; filter: opacity(0.7);">Photo de Profil</h3>
+                <div class="transparent" style="display: flex;">
+                    <img id="pdp-preview" style="background-color: var(--back-dark); border-radius: 25px; box-shadow: inset #ffffff45 15px 15px 30px, inset #00000099 -15px -15px 30px; border: #00000000; background-repeat: no-repeat; background-size: cover; background-clip: border-box;border-radius: 250px; height: 250px; width: 250px;">
+                    <input type="file" name="file" id="pdp-file" class="inputfile" style="position: relative; top: 125px; width: 0.1px; height: 0.1px; opacity: 0; overflow: hidden; position: absolute; z-index: -1;">
+                    <label for="pdp-file">Choose a file</label>
+                    <script>
+                        document.getElementById("pdp-file").onchange = function()
+                        {
+                            var reader = new FileReader();
+                            reader.onload = function (e)
+                            {
+                                console.log(e.target.result)
+                                document.getElementById("pdp-preview").src = e.target.result;
+                            };
+                            reader.readAsDataURL(document.getElementById("pdp-file").files[document.getElementById("pdp-file").files.length - 1]);
+                        }
+                    </script>
+                </div>
+                <h3 style="text-align: left; color: var(--cyan); height: auto; filter: opacity(0.7);">Code Ami</h3>
+                <div style="background-color: var(--cyan-back);">
+                    <input type="text" style="text-align: left; margin-left: 25px; font-size: 40px; height: 90%; width: 90%; background-color: #00000000; border-color: #00000000; font-weight: 500; font-family: splat regular; color: var(--white); text-shadow: #000000 0px 0px 15px; font-size: clamp(7px, 10vw, 55px); line-height: 0;" value="SW-">
+                </div>
+
+                <h3 style="text-align: left; color: var(--cyan); height: auto; filter: opacity(0.7);">Mot de Passe</h3>
+                <div style="background-color: var(--cyan-back);">
+                    <input type="password" style="text-align: left; margin-left: 25px; font-size: 40px; height: 90%; width: 90%; background-color: #00000000; border-color: #00000000; font-weight: 500; font-family: splat regular; color: var(--white); text-shadow: #000000 0px 0px 15px; font-size: clamp(7px, 10vw, 55px); line-height: 0;" value="">
+                </div>
+                <h3 style="text-align: left; color: var(--cyan); height: auto; filter: opacity(0.7);">Vérification</h3>
+                <div style="background-color: var(--cyan-back);">
+                    <input type="password" style="text-align: left; margin-left: 25px; font-size: 40px; height: 90%; width: 90%; background-color: #00000000; border-color: #00000000; font-weight: 500; font-family: splat regular; color: var(--white); text-shadow: #000000 0px 0px 15px; font-size: clamp(7px, 10vw, 55px); line-height: 0;" value="">
+                </div>
+
+
+                <button style="text-align: center; border-radius: 100px; height: 150px; background-color: var(--cyan); width: calc(100% - 50px);">Créer mon Compte</button>
+            </div>
+            <button style="background-color: #5865F2; margin-top: 40px; height: 300px; border-radius: 100px; width: 50%; height: 15vw;"><img src="./discord.png" style="width: calc(100% - 100px); filter: drop-shadow(#00000075 0px 0px 20px);"></button>
+        </div>
+    </body>
+</body>
+</html>
